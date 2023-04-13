@@ -32,7 +32,7 @@ public class DynamicReadListener<T> implements ReadListener<Object> {
     @Getter
     private final List<T> list = new ArrayList<>(16);
 
-    public DynamicReadListener(Class<T> tClass) {
+    private DynamicReadListener(Class<T> tClass) {
         this.tClass = tClass;
         this.excelPropertyList = getAllExcelProperty(tClass);
         for (Field field : this.excelPropertyList) {
@@ -41,6 +41,10 @@ public class DynamicReadListener<T> implements ReadListener<Object> {
 
         defaultConverterMap = DefaultConverterLoader.loadDefaultReadConverter();
 
+    }
+
+    public static <U> DynamicReadListener<U> of( Class<U> tClass){
+        return new DynamicReadListener<>(tClass);
     }
 
 
